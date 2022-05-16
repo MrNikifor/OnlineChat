@@ -1,5 +1,6 @@
 package com.example.clientchat;
 
+
 import com.example.clientchat.controllers.AuthController;
 import com.example.clientchat.controllers.ClientController;
 import javafx.application.Application;

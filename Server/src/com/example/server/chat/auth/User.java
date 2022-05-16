@@ -1,4 +1,5 @@
 package com.example.server.chat.auth;
+
 import java.util.Objects;
 
 public class User {

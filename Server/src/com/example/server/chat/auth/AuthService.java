@@ -1,6 +1,5 @@
 package com.example.server.chat.auth;
 
-
 import java.util.Set;
 
 public class AuthService {
