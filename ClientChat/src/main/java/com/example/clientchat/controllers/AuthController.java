@@ -14,6 +14,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AuthController {
 
@@ -49,6 +51,7 @@ public class AuthController {
     }
 
     public void initializeMessageHandler() {
+
         readMessageListener = getNetwork().addReadMessageListener(new ReadMessageListener() {
             @Override
             public void processReceivedCommand(Command command) {
@@ -79,4 +82,5 @@ public class AuthController {
     public void close() {
         getNetwork().removeReadMessageListener(readMessageListener);
     }
+    
 }

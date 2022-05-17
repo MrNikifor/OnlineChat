@@ -1,5 +1,6 @@
 package com.example.clientchat.model;
 
+
 import com.example.command.Command;
 
 import java.io.*;
@@ -63,7 +64,7 @@ public class Network {
         try {
             outputStream.writeObject(command);
         } catch (IOException e) {
-            System.err.println("Не удалось отправить сообщение на сервер");
+            System.err.println("Failed to send a message to the server");
             e.printStackTrace();
             throw e;
         }
@@ -107,7 +108,7 @@ public class Network {
                         }
 
                     } catch (IOException e) {
-                        System.err.println("Не удалось получить сообщение от сервера");
+                        System.err.println("Failed to receive a message from the server");
                         e.printStackTrace();
                         close();
                         break;
@@ -135,7 +136,7 @@ public class Network {
             socket.close();
             readMessageProcess.interrupt();
         } catch (IOException e) {
-            System.err.println("Не удалось закрыть сетевое соединение");
+            System.err.println("Failed to close network connection");
         }
     }
 

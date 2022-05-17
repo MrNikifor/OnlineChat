@@ -1,15 +1,16 @@
 package com.example.clientchat.dialogs;
 
+
 import com.example.clientchat.ClientChat;
 import javafx.scene.control.Alert;
 
 public class Dialogs {
 
     public enum AuthError {
-        EMPTY_CREDENTIALS("Логин и пароль должны быть указаны"),
-        INVALID_CREDENTIALS("Логин и пароль заданы некорректно");
+        EMPTY_CREDENTIALS("Login and password must be specified"),
+        INVALID_CREDENTIALS("Username and password are set incorrectly");
 
-        private static final String TITLE = "Ошибка аутентификации";
+        private static final String TITLE = "Authentication error";
         private static final String TYPE = TITLE;
 
         private final String message;
@@ -24,11 +25,11 @@ public class Dialogs {
     }
 
     public enum NetworkError {
-        SEND_MESSAGE("Не удалось отправить сообщение!"),
-        SERVER_CONNECT("Не удалось установить соединение с сервером!");
+        SEND_MESSAGE("Failed to send a message!"),
+        SERVER_CONNECT("Failed to establish a connection with the server!");
 
-        private static final String TITLE = "Сетевая ошибка";
-        private static final String TYPE = "Ошибка передачи данных по сети";
+        private static final String TITLE = "Network error";
+        private static final String TYPE = "Data transmission error over the network";
         private final String message ;
 
         NetworkError(String message) {
