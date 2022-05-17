@@ -93,6 +93,10 @@ public class ClientChat extends Application {
     public static ClientChat getInstance() {
         return INSTANCE;
     }
+    public void timeOutExit(){
+        getAuthController().close();
+        getAuthStage().close();
+    }
 
 
 }
