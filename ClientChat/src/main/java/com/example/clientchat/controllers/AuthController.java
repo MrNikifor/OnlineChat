@@ -19,6 +19,7 @@ import java.util.TimerTask;
 
 public class AuthController {
 
+    public static final int LIMITED_TIME = 120_000;
     @FXML
     public TextField loginField;
     @FXML
@@ -48,9 +49,20 @@ public class AuthController {
             Dialogs.NetworkError.SEND_MESSAGE.show();
             e.printStackTrace();
         }
+
     }
 
     public void initializeMessageHandler() {
+        Timer timeOut = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(()->{
+                    ClientChat.getInstance().timeOutExit();
+                });
+            }
+        };
+        timeOut.schedule(timerTask,LIMITED_TIME);
 
         readMessageListener = getNetwork().addReadMessageListener(new ReadMessageListener() {
             @Override
