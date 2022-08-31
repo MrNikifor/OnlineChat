@@ -4,7 +4,6 @@ import com.example.clientchat.ClientChat;
 import com.example.clientchat.dialogs.Dialogs;
 import com.example.clientchat.model.Network;
 import com.example.clientchat.model.ReadMessageListener;
-import com.example.command.Command;
 import com.example.command.CommandType;
 import com.example.command.commands.commands.AuthOkCommandData;
 import javafx.application.Platform;
@@ -14,12 +13,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class AuthController {
 
-    public static final int LIMITED_TIME = 120_000;
     @FXML
     public TextField loginField;
     @FXML
@@ -49,35 +46,18 @@ public class AuthController {
             Dialogs.NetworkError.SEND_MESSAGE.show();
             e.printStackTrace();
         }
-
     }
 
     public void initializeMessageHandler() {
-        Timer timeOut = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(()->{
-                    ClientChat.getInstance().timeOutExit();
-                });
-            }
-        };
-        timeOut.schedule(timerTask,LIMITED_TIME);
 
-        readMessageListener = getNetwork().addReadMessageListener(new ReadMessageListener() {
-            @Override
-            public void processReceivedCommand(Command command) {
-                if (command.getType() == CommandType.AUTH_OK) {
-                    AuthOkCommandData data = (AuthOkCommandData) command.getData();
-                    String userName = data.getUserName();
-                    Platform.runLater(() -> {
-                        ClientChat.getInstance().switchToMainChatWindow(userName);
-                    });
-                } else {
-                    Platform.runLater(() -> {
-                        Dialogs.AuthError.INVALID_CREDENTIALS.show();
-                    });
-                }
+        readMessageListener = getNetwork().addReadMessageListener(command -> {
+            if (command.getType() == CommandType.AUTH_OK) {
+                AuthOkCommandData data = (AuthOkCommandData) command.getData();
+                String userName = data.getUserName();
+                Network.getInstance().setCurrentUsername(userName);
+                Platform.runLater(() -> ClientChat.getInstance().switchToMainChatWindow(userName));
+            } else {
+                Platform.runLater(Dialogs.AuthError.INVALID_CREDENTIALS::show);
             }
         });
     }
@@ -94,5 +74,4 @@ public class AuthController {
     public void close() {
         getNetwork().removeReadMessageListener(readMessageListener);
     }
-    
 }

@@ -7,10 +7,14 @@ import java.io.*;
 import java.net.Socket;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
 
 public class Network {
 
     private List<ReadMessageListener> listeners = new CopyOnWriteArrayList<>();
+    private String currentUsername;
+    private ExecutorService executorService;
+
 
     private static Network INSTANCE;
     public static final String SERVER_HOST = "127.0.0.1";
@@ -130,6 +134,10 @@ public class Network {
         this.listeners.remove(listener);
     }
 
+    public void changeUsername(String newUsername) throws IOException {
+        sendCommand(Command.updateUsernameCommand(newUsername));
+    }
+
     public void close() {
         try {
             connected = false;
@@ -138,6 +146,13 @@ public class Network {
         } catch (IOException e) {
             System.err.println("Failed to close network connection");
         }
+    }
+    public String getCurrentUsername(){
+        return currentUsername;
+    }
+
+    public void setCurrentUsername(String currentUsername) {
+        this.currentUsername = currentUsername;
     }
 
     public boolean isConnected() {
