@@ -7,10 +7,10 @@ import javafx.scene.control.Alert;
 public class Dialogs {
 
     public enum AuthError {
-        EMPTY_CREDENTIALS("Login and password must be specified"),
-        INVALID_CREDENTIALS("Username and password are set incorrectly");
+        EMPTY_CREDENTIALS("Логин и пароль должны быть указаны"),
+        INVALID_CREDENTIALS("Логин и пароль заданы некорректно");
 
-        private static final String TITLE = "Authentication error";
+        private static final String TITLE = "Ошибка аутентификации";
         private static final String TYPE = TITLE;
 
         private final String message;
@@ -22,14 +22,17 @@ public class Dialogs {
         public void show() {
             showDialog(Alert.AlertType.ERROR, TITLE, TITLE, message);
         }
+        public void show(String message) {
+            showDialog(Alert.AlertType.ERROR, TITLE, TITLE, message);
+        }
     }
 
     public enum NetworkError {
-        SEND_MESSAGE("Failed to send a message!"),
-        SERVER_CONNECT("Failed to establish a connection with the server!");
+        SEND_MESSAGE("Не удалось отправить сообщение!"),
+        SERVER_CONNECT("Не удалось установить соединение с сервером!");
 
-        private static final String TITLE = "Network error";
-        private static final String TYPE = "Data transmission error over the network";
+        private static final String TITLE = "Сетевая ошибка";
+        private static final String TYPE = "Ошибка передачи данных по сети";
         private final String message ;
 
         NetworkError(String message) {
@@ -41,6 +44,40 @@ public class Dialogs {
         }
 
     }
+    public enum AuthTimeout{
+        AUTH_TIMEOUT("Время на авторизацию в чате истекло. Повторите вход");
+
+        private static final String TITLE = "Время на авторизацию истекло";
+        private static final String TYPE = TITLE;
+
+        private final String message;
+
+        AuthTimeout(String message) {
+            this.message = message;
+        }
+
+        public void show(){
+            showDialog(Alert.AlertType.WARNING, TITLE, TITLE, message);
+        }
+    }
+
+    public enum AboutDialog {
+        INFO(String.format("Создатель чата: %s %n Используемые технологии: %s", "Маркушов Сергей", "Java 11, JavaFX, Maven"));
+
+        private final String message;
+        private static final String TITLE = "Информация о программе";
+        private static final String TYPE = "Онлайн чат для локального обмена сообщениями";
+
+        AboutDialog(String message) {
+            this.message = message;
+        }
+
+        public void show() {
+            showDialog(Alert.AlertType.INFORMATION, TITLE, TYPE, message);
+        }
+
+    }
+
 
     private static void showDialog(Alert.AlertType dialogType, String title, String type, String message) {
         Alert alert = new Alert(dialogType);
